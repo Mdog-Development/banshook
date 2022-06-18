@@ -1,0 +1,16 @@
+#Set your discord webhook url here!
+#This is required for the plugin to function
+webhook-url: "Enter Your Webhook Url Here"
+
+#Toggle if the announcement should show!
+announcements:
+  ban: true
+  mute: true
+  warn: true
+  kick: true
+  unmute: true
+  unban: true
+  unwarn: true
+
+#Commands: 'banshook-reload' and 'breload' both reload the plugin
+#Permissions: 'bhook.reload' is needed to reload the plugin
