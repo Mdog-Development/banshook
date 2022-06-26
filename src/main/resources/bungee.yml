@@ -1,6 +1,6 @@
 name: Banshook
 version: '${project.version}'
-main: com.mdogdevelopment.banshook.Banshook
+main: com.mdogdevelopment.banshook.bungee.Banshook
 description: Sends litebans events to discord
 author: Mdog504
 depends:

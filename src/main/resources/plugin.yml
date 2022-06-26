@@ -1,0 +1,13 @@
+name: Banshook
+main: com.mdogdevelopment.banshook.spigot.Banshook
+version: '${project.version}'
+description: Sends litebans events to discord
+author: Mdog504
+api-version: 1.19
+depend: [LiteBans]
+commands:
+  banshook-reload:
+    description: Reloads the configuration
+    usage: /banshook-reload
+    aliases: [breload]
+    permission: bhook.reload
