@@ -61,8 +61,8 @@ public class unpunishEvents extends Events.Listener {
                         webhook.addEmbed(new DiscordWebhook.EmbedObject()
                                 .setTitle("Member Unbanned")
                                 .setColor(Color.GREEN)
-                                .addField("Player", name, true)
-                                .addField("Moderator", executor, true)
+                                .addField("Player", "`"+name+"`", true)
+                                .addField("Moderator", "`"+executor+"`", true)
                                 .addField("Reason", reason, true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
@@ -83,7 +83,7 @@ public class unpunishEvents extends Events.Listener {
                         webhook.addEmbed(new DiscordWebhook.EmbedObject()
                                 .setTitle("Member Unwarned")
                                 .setColor(Color.GREEN)
-                                .addField("Player", name, true)
+                                .addField("Player", "`"+name+"`", true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
                     } catch (Exception e) {
@@ -109,8 +109,8 @@ public class unpunishEvents extends Events.Listener {
                         webhook.addEmbed(new DiscordWebhook.EmbedObject()
                                 .setTitle("Member Unmuted")
                                 .setColor(Color.GREEN)
-                                .addField("Player", name, true)
-                                .addField("Moderator", executor, true)
+                                .addField("Player", "`"+name+"`", true)
+                                .addField("Moderator", "`"+executor+"`", true)
                                 .addField("Reason", reason, true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
