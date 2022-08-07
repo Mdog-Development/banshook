@@ -52,6 +52,7 @@ public class punishEvents extends Events.Listener {
                     Long startDate = entry.getDateStart();
                     Boolean isPermanent = entry.isPermanent();
                     String duration = entry.getDurationString();
+                    Boolean isIP = entry.isIpban();
 
                     String name = getName(uuid);
 
@@ -69,10 +70,11 @@ public class punishEvents extends Events.Listener {
                         webhook.addEmbed(new DiscordWebhook.EmbedObject()
                                 .setTitle("Member Banned")
                                 .setColor(Color.RED)
-                                .addField("Player", name, true)
-                                .addField("Moderator", executor, true)
+                                .addField("Player", "`"+name+"`", true)
+                                .addField("Moderator", "`"+executor+"`", true)
                                 .addField("Reason", reason, true)
                                 .addField("Duration", duration, true)
+                                .addField("IP Ban", isIP.toString(), true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
                     } catch (Exception e) {
@@ -99,8 +101,8 @@ public class punishEvents extends Events.Listener {
                         webhook.addEmbed(new DiscordWebhook.EmbedObject()
                                 .setTitle("Member Kicked")
                                 .setColor(Color.ORANGE)
-                                .addField("Player", name, true)
-                                .addField("Moderator", executor, true)
+                                .addField("Player", "`"+name+"`", true)
+                                .addField("Moderator", "`"+executor+"`", true)
                                 .addField("Reason", reason, true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
@@ -128,8 +130,8 @@ public class punishEvents extends Events.Listener {
                         webhook.addEmbed(new DiscordWebhook.EmbedObject()
                                 .setTitle("Member Warned")
                                 .setColor(Color.YELLOW)
-                                .addField("Player",name, true)
-                                .addField("Moderator", executor, true)
+                                .addField("Player","`"+name+"`", true)
+                                .addField("Moderator", "`"+executor+"`", true)
                                 .addField("Reason", reason, true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
@@ -163,8 +165,8 @@ public class punishEvents extends Events.Listener {
                         webhook.addEmbed(new DiscordWebhook.EmbedObject()
                                 .setTitle("Member Muted")
                                 .setColor(Color.PINK)
-                                .addField("Player", name, true)
-                                .addField("Moderator", executor, true)
+                                .addField("Player", "`"+name+"`", true)
+                                .addField("Moderator", "`"+executor+"`", true)
                                 .addField("Reason", reason, true)
                                 .addField("Duration", duration, true)
                                 .setFooter(uuid+" | "+date, null));
