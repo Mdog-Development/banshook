@@ -6,8 +6,11 @@ author: Mdog504
 api-version: 1.19
 depend: [LiteBans]
 commands:
-  banshook-reload:
-    description: Reloads the configuration
-    usage: /banshook-reload
-    aliases: [breload]
-    permission: bhook.reload
+  bhook:
+    description: Banshook commands
+    usage: /bhook <command>
+
+permissions:
+  bhook.reload:
+    description: Reload the plugin
+    default: op
