@@ -8,10 +8,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.awt.*;
+import java.math.BigInteger;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class punishEvents extends Events.Listener {
     public String getName(String uuid) {
@@ -32,6 +34,7 @@ public class punishEvents extends Events.Listener {
         return uuid;
     }
 
+
     public void registerEvents() {
         Events.get().register(new Events.Listener() {
             @Override
@@ -44,6 +47,11 @@ public class punishEvents extends Events.Listener {
                 Boolean kickEnabled = configuration.getBoolean("announcements.kick");
                 Boolean muteEnabled = configuration.getBoolean("announcements.mute");
 
+                if (Objects.equals(webhookUrl, "")) {
+                    Bukkit.getLogger().warning("No URL provided!");
+                    return;
+                }
+
                 if (entry.getType().equals("ban")) {
                     if (!banEnabled) return;
                     String uuid = entry.getUuid();
@@ -53,6 +61,7 @@ public class punishEvents extends Events.Listener {
                     Boolean isPermanent = entry.isPermanent();
                     String duration = entry.getDurationString();
                     Boolean isIP = entry.isIpban();
+                    Long id = entry.getId();
 
                     String name = getName(uuid);
 
@@ -75,6 +84,7 @@ public class punishEvents extends Events.Listener {
                                 .addField("Reason", reason, true)
                                 .addField("Duration", duration, true)
                                 .addField("IP Ban", isIP.toString(), true)
+                                .addField("ID", id.toString(), true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
                     } catch (Exception e) {
@@ -87,6 +97,7 @@ public class punishEvents extends Events.Listener {
                     String reason = entry.getReason();
                     String executor = entry.getExecutorName();
                     Long startDate = entry.getDateStart();
+                    Long id = entry.getId();
 
                     String name = getName(uuid);
 
@@ -104,6 +115,7 @@ public class punishEvents extends Events.Listener {
                                 .addField("Player", "`"+name+"`", true)
                                 .addField("Moderator", "`"+executor+"`", true)
                                 .addField("Reason", reason, true)
+                                .addField("ID", id.toString(), true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
                     } catch (Exception e) {
@@ -116,6 +128,7 @@ public class punishEvents extends Events.Listener {
                     String reason = entry.getReason();
                     String executor = entry.getExecutorName();
                     Long startDate = entry.getDateStart();
+                    Long id = entry.getId();
 
                     String name = getName(uuid);
 
@@ -133,6 +146,7 @@ public class punishEvents extends Events.Listener {
                                 .addField("Player","`"+name+"`", true)
                                 .addField("Moderator", "`"+executor+"`", true)
                                 .addField("Reason", reason, true)
+                                .addField("ID", id.toString(), true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
                     } catch (Exception e) {
@@ -147,6 +161,7 @@ public class punishEvents extends Events.Listener {
                     Long startDate = entry.getDateStart();
                     Boolean isPermanent = entry.isPermanent();
                     String duration = entry.getDurationString();
+                    Long id = entry.getId();
 
                     String name = getName(uuid);
 
@@ -169,6 +184,7 @@ public class punishEvents extends Events.Listener {
                                 .addField("Moderator", "`"+executor+"`", true)
                                 .addField("Reason", reason, true)
                                 .addField("Duration", duration, true)
+                                .addField("ID", id.toString(), true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
                     } catch (Exception e) {

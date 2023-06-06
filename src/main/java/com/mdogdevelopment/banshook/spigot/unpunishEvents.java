@@ -4,6 +4,7 @@ import com.mdogdevelopment.banshook.DiscordWebhook;
 import litebans.api.Database;
 import litebans.api.Entry;
 import litebans.api.Events;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.awt.*;
@@ -11,6 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class unpunishEvents extends Events.Listener {
     public String getName(String uuid) {
@@ -42,15 +44,19 @@ public class unpunishEvents extends Events.Listener {
                 Boolean unwarnEnabled = configuration.getBoolean("announcements.unwarn");
                 Boolean unmuteEnabled = configuration.getBoolean("announcements.unmute");
 
+                if (Objects.equals(webhookUrl, "")) {
+                    Bukkit.getLogger().warning("No URL provided!");
+                    return;
+                }
+
                 if (entry.getType().equals("ban")){
                     if (!unbanEnabled) return;
                     String uuid = entry.getUuid();
                     String reason = entry.getRemovalReason();
                     String executor = entry.getRemovedByName();
-
                     String name = getName(uuid);
-
                     LocalDate date = LocalDate.now();
+                    Long id = entry.getId();
 
                     if (reason.equals("")) {
                         reason = "No reason given";
@@ -64,6 +70,7 @@ public class unpunishEvents extends Events.Listener {
                                 .addField("Player", "`"+name+"`", true)
                                 .addField("Moderator", "`"+executor+"`", true)
                                 .addField("Reason", reason, true)
+                                .addField("ID", id.toString(), true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
                     } catch (Exception e) {
@@ -73,10 +80,9 @@ public class unpunishEvents extends Events.Listener {
                 } else if (entry.getType().equals("warn")) {
                     if (!unwarnEnabled) return;
                     String uuid = entry.getUuid();
-
                     String name = getName(uuid);
-
                     LocalDate date = LocalDate.now();
+                    Long id = entry.getId();
 
                     try {
                         DiscordWebhook webhook = new DiscordWebhook(webhookUrl);
@@ -84,6 +90,7 @@ public class unpunishEvents extends Events.Listener {
                                 .setTitle("Member Unwarned")
                                 .setColor(Color.GREEN)
                                 .addField("Player", "`"+name+"`", true)
+                                .addField("ID", id.toString(), true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
                     } catch (Exception e) {
@@ -95,6 +102,7 @@ public class unpunishEvents extends Events.Listener {
                     String uuid = entry.getUuid();
                     String reason = entry.getRemovalReason();
                     String executor = entry.getRemovedByName();
+                    Long id = entry.getId();
 
                     String name = getName(uuid);
 
@@ -112,6 +120,7 @@ public class unpunishEvents extends Events.Listener {
                                 .addField("Player", "`"+name+"`", true)
                                 .addField("Moderator", "`"+executor+"`", true)
                                 .addField("Reason", reason, true)
+                                .addField("ID", id.toString(), true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
                     } catch (Exception e) {

@@ -6,12 +6,14 @@ import litebans.api.Entry;
 import litebans.api.Events;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.config.Configuration;
+import org.bukkit.Bukkit;
 
 import java.awt.*;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class punishEvents implements Listener {
     public String getName(String uuid) {
@@ -44,6 +46,10 @@ public class punishEvents implements Listener {
                 Boolean kickEnabled = configuration.getBoolean("announcements.kick");
                 Boolean muteEnabled = configuration.getBoolean("announcements.mute");
 
+                if (Objects.equals(webhookUrl, "")) {
+                    return;
+                }
+
                 if (entry.getType().equals("ban")) {
                     if (!banEnabled) return;
                     String uuid = entry.getUuid();
@@ -53,6 +59,7 @@ public class punishEvents implements Listener {
                     Boolean isPermanent = entry.isPermanent();
                     String duration = entry.getDurationString();
                     Boolean isIP = entry.isIpban();
+                    Long id = entry.getId();
 
                     String name = getName(uuid);
 
@@ -74,7 +81,8 @@ public class punishEvents implements Listener {
                                 .addField("Moderator", "`"+executor+"`", true)
                                 .addField("Reason", reason, true)
                                 .addField("Duration", duration, true)
-                                .addField("IP", isIP.toString(), true)
+                                .addField("IP Ban", isIP.toString(), true)
+                                .addField("ID", id.toString(), true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
                     } catch (Exception e) {
@@ -87,6 +95,7 @@ public class punishEvents implements Listener {
                     String reason = entry.getReason();
                     String executor = entry.getExecutorName();
                     Long startDate = entry.getDateStart();
+                    Long id = entry.getId();
 
                     String name = getName(uuid);
 
@@ -104,6 +113,7 @@ public class punishEvents implements Listener {
                                 .addField("Player", "`"+name+"`", true)
                                 .addField("Moderator", "`"+executor+"`", true)
                                 .addField("Reason", reason, true)
+                                .addField("ID", id.toString(), true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
                     } catch (Exception e) {
@@ -116,6 +126,7 @@ public class punishEvents implements Listener {
                     String reason = entry.getReason();
                     String executor = entry.getExecutorName();
                     Long startDate = entry.getDateStart();
+                    Long id = entry.getId();
 
                     String name = getName(uuid);
 
@@ -133,6 +144,7 @@ public class punishEvents implements Listener {
                                 .addField("Player","`"+name+"`", true)
                                 .addField("Moderator", "`"+executor+"`", true)
                                 .addField("Reason", reason, true)
+                                .addField("ID", id.toString(), true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
                     } catch (Exception e) {
@@ -147,6 +159,7 @@ public class punishEvents implements Listener {
                     Long startDate = entry.getDateStart();
                     Boolean isPermanent = entry.isPermanent();
                     String duration = entry.getDurationString();
+                    Long id = entry.getId();
 
                     String name = getName(uuid);
 
@@ -169,12 +182,14 @@ public class punishEvents implements Listener {
                                 .addField("Moderator", "`"+executor+"`", true)
                                 .addField("Reason", reason, true)
                                 .addField("Duration", duration, true)
+                                .addField("ID", id.toString(), true)
                                 .setFooter(uuid+" | "+date, null));
                         webhook.execute();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
+
             }
         });
     }
